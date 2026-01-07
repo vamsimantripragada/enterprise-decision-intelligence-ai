@@ -1,16 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from uuid import uuid4
+
+from schemas import ResearchRequest, ResearchResponse
 
 app = FastAPI(
     title="Enterprise Decision Intelligence AI Platform (EDIP)",
-    version="1.0.0",
-    description="Backend API for a multi-agent enterprise AI system"
+    version="1.0.0"
 )
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # tighten later
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,7 +19,22 @@ app.add_middleware(
 
 @app.get("/health")
 def health_check():
-    return {
-        "status": "ok",
-        "service": "EDIP Backend"
-    }
+    return {"status": "ok", "service": "EDIP Backend"}
+
+
+@app.post("/research", response_model=ResearchResponse)
+def run_research(request: ResearchRequest):
+    """
+    Placeholder endpoint.
+    AI orchestration will be added in later steps.
+    """
+    return ResearchResponse(
+        report_id=str(uuid4()),
+        summary="This is a placeholder research summary.",
+        key_findings=[
+            "Finding 1 placeholder",
+            "Finding 2 placeholder"
+        ],
+        sources=request.sources,
+        confidence_score=0.0
+    )
