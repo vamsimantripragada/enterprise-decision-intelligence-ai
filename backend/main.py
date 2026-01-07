@@ -2,11 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from uuid import uuid4
 from agents.graph import build_graph
-graph = build_graph()
-
+from audit_logger import AuditLogger
 
 from schemas import ResearchRequest, ResearchResponse
 from agents.orchestrator import Orchestrator
+
 
 app = FastAPI
 (
@@ -22,6 +22,9 @@ app.add_middleware
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+graph = build_graph()
+audit_logger = AuditLogger()
 
 orchestrator = Orchestrator()
 
