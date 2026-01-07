@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from uuid import uuid4
 
 from schemas import ResearchRequest, ResearchResponse
+from agents.orchestrator import Orchestrator
 
 app = FastAPI(
     title="Enterprise Decision Intelligence AI Platform (EDIP)",
@@ -17,6 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+orchestrator = Orchestrator()
+
 @app.get("/health")
 def health_check():
     return {"status": "ok", "service": "EDIP Backend"}
@@ -24,17 +27,12 @@ def health_check():
 
 @app.post("/research", response_model=ResearchResponse)
 def run_research(request: ResearchRequest):
-    """
-    Placeholder endpoint.
-    AI orchestration will be added in later steps.
-    """
+    result = orchestrator.run(request.query)
+
     return ResearchResponse(
         report_id=str(uuid4()),
-        summary="This is a placeholder research summary.",
-        key_findings=[
-            "Finding 1 placeholder",
-            "Finding 2 placeholder"
-        ],
+        summary=result["summary"],
+        key_findings=result["key_findings"],
         sources=request.sources,
-        confidence_score=0.0
+        confidence_score=result["confidence_score"]
     )
