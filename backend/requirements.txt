@@ -5,3 +5,5 @@ python-dotenv
 langgraph
 langchain
 google-generativeai
+chromadb
+sentence-transformers
