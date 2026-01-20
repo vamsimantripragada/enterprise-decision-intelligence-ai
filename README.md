@@ -15,3 +15,14 @@ EDIP is a secure, multi-agent AI platform designed to convert unstructured enter
 - HR & Compliance Research
 - Market Entry Analysis
 - Policy & Risk Assessment
+
+## Deployment
+
+The backend is containerized using Docker for portability and scalability.
+It can be deployed on cloud platforms such as Hugging Face Spaces or AWS.
+
+Environment variables:
+- GEMINI_API_KEY
+
+Frontend is deployed separately using Vercel.
+
